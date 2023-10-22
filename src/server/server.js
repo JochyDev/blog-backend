@@ -48,9 +48,6 @@ class Server {
         this.app.use(express.json());
         // Directorio Público
         this.app.use(express.static('src/public'));
-        this.app.get('*', (req, res) => {
-            res.sendFile(path.join(__dirname, '../public/index.html'));
-          });
           
         // FileUpload - Carga de Archivos
         this.app.use(fileUpload({
@@ -64,8 +61,11 @@ class Server {
         this.app.use(this.paths.sections, sectionsRutes);
         this.app.use(this.paths.subscribers, subscribersRutes);
         this.app.use(this.paths.uploads, uploadsRoutes);
+        this.app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, '../public/index.html'));
+          });
     }
-    
+
     listen(){
         this.app.listen( this.port , () =>{
             console.log(`the app is runnig at port: ${this.port} `)
